@@ -1,0 +1,82 @@
+{
+  "name": "apparent-expo",
+  "version": "0.2.1",
+  "description": "Event SDK for Expo and bare React Native apps that report to an Apparent dashboard. No native code. Saves every event before sending, never sends twice at once, backs off politely.",
+  "homepage": "https://apparent.fyi/docs/sdk/expo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedAshour/apparent-sdks.git",
+    "directory": "expo"
+  },
+  "bugs": {
+    "email": "hello@apparent.fyi"
+  },
+  "author": "Ahmed Ashour <hello@apparent.fyi>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./router": {
+      "types": "./dist/router.d.ts",
+      "default": "./dist/router.js"
+    },
+    "./navigation": {
+      "types": "./dist/navigation.d.ts",
+      "default": "./dist/navigation.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "prepack": "node build.mjs"
+  },
+  "peerDependencies": {
+    "@react-native-async-storage/async-storage": ">=1.17",
+    "react-native": "*",
+    "expo-application": "*",
+    "expo-localization": "*",
+    "react-native-device-info": "*",
+    "expo-router": "*",
+    "react": "*"
+  },
+  "peerDependenciesMeta": {
+    "expo-application": {
+      "optional": true
+    },
+    "expo-localization": {
+      "optional": true
+    },
+    "react-native-device-info": {
+      "optional": true
+    },
+    "expo-router": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
+  "keywords": [
+    "analytics",
+    "react-native",
+    "expo",
+    "events",
+    "mobile"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

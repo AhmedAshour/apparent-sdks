@@ -1,0 +1,119 @@
+{
+  "a": "einb",
+  "k": "k_test",
+  "v": "0.2.0",
+  "sa": 1800000000000,
+  "d": {
+    "platform": "android",
+    "os": "34",
+    "app": "1.0.0",
+    "build": "1",
+    "model": "Pixel 8",
+    "locale": "en-DE",
+    "region": "DE",
+    "tz": "Europe/Berlin",
+    "anon": "c8f1d152500f8b7b22d00ab282410a69",
+    "user": null
+  },
+  "e": [
+    {
+      "n": "first_open",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "25ed1bc594a8c383758b5913dde06c51"
+    },
+    {
+      "n": "app_open",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "17c0d071cb7ae2d1a0bce5931985ae75",
+      "p": {
+        "cold": true
+      }
+    },
+    {
+      "n": "paywall_view",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "7d1a71229135ba616ee4b718e6127fe1",
+      "p": {
+        "plan": "free",
+        "language": "de",
+        "source": "onboarding",
+        "price": 4.99,
+        "count": 3,
+        "whole": 2,
+        "ok": true,
+        "none": null,
+        "long": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      }
+    },
+    {
+      "n": "screen_view",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "d208e39c17bd00c65b72919c7e019470",
+      "p": {
+        "plan": "free",
+        "language": "de",
+        "screen": "home"
+      }
+    },
+    {
+      "n": "screen_view",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "d02adb4a5c2c90bd49ddc73a91f294a5",
+      "p": {
+        "plan": "free",
+        "language": "de",
+        "path": "/practice/recht",
+        "screen": "practice/[topic]",
+        "from": "home"
+      }
+    },
+    {
+      "n": "purchase_success",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "5de357c3104f0ff295d71a2ea81fc79f",
+      "p": {
+        "plan": "free",
+        "language": "de",
+        "product": "pro"
+      },
+      "u": "user-42"
+    },
+    {
+      "n": "after_unset",
+      "t": 1800000000000,
+      "s": "63eaefcf0480e6f2b00dafc88202e3d2",
+      "i": "06914918716489cb96e07223d34f7801",
+      "p": {
+        "plan": "free"
+      },
+      "u": "user-42"
+    },
+    {
+      "n": "after_logout",
+      "t": 1800000000000,
+      "s": "4001c399fbd84c5ad0b0dbe63c7e58b3",
+      "i": "b16c74a98d684860ca735634a83680f0",
+      "a": "8fc49d26862c88577987087ef0c8702e"
+    },
+    {
+      "n": "error",
+      "t": 1800000000000,
+      "s": "4001c399fbd84c5ad0b0dbe63c7e58b3",
+      "i": "36c5cdab277243ae349ed3598d2dbf1d",
+      "p": {
+        "message": "boom",
+        "type": "Error",
+        "fatal": false,
+        "how": "reported",
+        "stack": "<stack>"
+      },
+      "a": "8fc49d26862c88577987087ef0c8702e"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+name: apparent
+description: Product analytics for Flutter apps that report to Apparent (apparent.fyi). Same wire format and behaviour as the Expo SDK.
+version: 0.2.1
+homepage: https://apparent.fyi/docs/sdk/flutter
+repository: https://github.com/AhmedAshour/apparent-sdks/tree/main/flutter
+issue_tracker: https://apparent.fyi/docs
+topics:
+  - analytics
+  - events
+  - mobile
+# Publishing: ../../scripts/release-sdks.md. `flutter pub publish --dry-run` must pass with no warnings.
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  device_info_plus: ">=11.0.0 <14.0.0"
+  flutter:
+    sdk: flutter
+  http: ^1.6.0
+  http_parser: ^4.1.2
+  package_info_plus: ">=8.0.0 <11.0.0"
+  path_provider: ^2.1.6
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter

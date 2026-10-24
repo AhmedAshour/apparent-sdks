@@ -1,0 +1,142 @@
+[
+  {
+    "a": "demo",
+    "k": "test-key",
+    "v": "<v>",
+    "sa": "<sa>",
+    "d": {
+      "platform": "ios",
+      "os": "18.0",
+      "app": "1.0.0",
+      "build": "1",
+      "model": "iPhone15,2",
+      "locale": "en-DE",
+      "region": "DE",
+      "tz": "Europe/Berlin",
+      "anon": "<anon1>",
+      "user": null
+    },
+    "e": [
+      {
+        "n": "first_open",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>"
+      },
+      {
+        "n": "app_open",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "cold": true
+        }
+      },
+      {
+        "n": "paywall_view",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro",
+          "lang": "de",
+          "source": "onboarding",
+          "price": 4.99,
+          "trial": true,
+          "coupon": null
+        }
+      },
+      {
+        "n": "screen_view",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro",
+          "lang": "de",
+          "screen": "home"
+        }
+      },
+      {
+        "n": "screen_view",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro",
+          "lang": "de",
+          "tab": "account",
+          "screen": "settings",
+          "from": "home"
+        }
+      },
+      {
+        "n": "purchase",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro",
+          "lang": "de",
+          "product": "pro_yearly"
+        },
+        "u": "user-42"
+      },
+      {
+        "n": "after_unset",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro"
+        },
+        "u": "user-42"
+      },
+      {
+        "n": "error",
+        "t": "<t>",
+        "s": "<session1>",
+        "i": "<id>",
+        "p": {
+          "plan": "pro",
+          "message": "boom",
+          "type": "Error",
+          "fatal": false,
+          "how": "reported",
+          "stack": "<stack>",
+          "screen": "settings"
+        },
+        "u": "user-42"
+      }
+    ]
+  },
+  {
+    "a": "demo",
+    "k": "test-key",
+    "v": "<v>",
+    "sa": "<sa>",
+    "d": {
+      "platform": "ios",
+      "os": "18.0",
+      "app": "1.0.0",
+      "build": "1",
+      "model": "iPhone15,2",
+      "locale": "en-DE",
+      "region": "DE",
+      "tz": "Europe/Berlin",
+      "anon": "<anon2>",
+      "user": null
+    },
+    "e": [
+      {
+        "n": "after_logout",
+        "t": "<t>",
+        "s": "<session2>",
+        "i": "<id>",
+        "p": {
+          "n": 1
+        }
+      }
+    ]
+  }
+]

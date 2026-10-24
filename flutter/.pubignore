@@ -1,0 +1,13 @@
+# Replaces .gitignore for `pub publish`: keep its entries, and leave out the repo-only test tools.
+.dart_tool/
+build/
+pubspec.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+conformance.sh
+tool/
+test/conformance_test.dart
+example/build/
+example/.dart_tool/
+example/ios/Pods/
+example/ios/Flutter/ephemeral/

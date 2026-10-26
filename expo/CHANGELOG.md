@@ -5,6 +5,9 @@ All notable changes to this SDK. Versions follow [Semantic Versioning](https://s
 
 ## Unreleased
 
+- Errors carry their `code` when they have one, and `offline: true` when the SDK's own last send found no network,
+  so Apparent can tell "no internet" from a real bug in any phone language.
+
 ## 0.2.1
 
 - Housekeeping release, no code changes: the public source no longer carries a signing team id in the Flutter example.

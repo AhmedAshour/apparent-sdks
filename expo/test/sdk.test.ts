@@ -440,6 +440,20 @@ describe("errors", () => {
     delete g.__apparentErrors;
   });
 
+  test("an error carries its code, and offline when our own send found no network", async () => {
+    const srv = fakeServer();
+    srv.mode = "offline";
+    const storage = memStorage();
+    const c = await launch(storage, { flushAt: 1 });
+    c.track("tap");
+    await settle(c);
+    c.captureError(Object.assign(new Error("لم يتم العثور على خادم"), { code: -1003 }));
+    await sleep(350);
+    const saved = storage.saved().queue.find((e: { n: string }) => e.n === "error");
+    assert.equal(saved.p.code, "-1003");
+    assert.equal(saved.p.offline, true);
+  });
+
   test("an error loop is capped per visit", async () => {
     const srv = fakeServer();
     const c = await launch(memStorage(), { flushAt: 1000 });

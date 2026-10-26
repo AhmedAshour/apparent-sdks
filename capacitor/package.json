@@ -1,0 +1,54 @@
+{
+  "name": "apparent-capacitor",
+  "version": "0.2.1",
+  "description": "Event SDK for Capacitor and Ionic apps that report to an Apparent dashboard. No native code of its own. Saves every event before sending, never sends twice at once, backs off politely.",
+  "homepage": "https://apparent.fyi/docs/sdk/capacitor",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AhmedAshour/apparent-sdks.git",
+    "directory": "capacitor"
+  },
+  "bugs": {
+    "email": "hello@apparent.fyi"
+  },
+  "author": "Ahmed Ashour <hello@apparent.fyi>",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs",
+    "prepack": "node build.mjs"
+  },
+  "peerDependencies": {
+    "@capacitor/app": ">=5",
+    "@capacitor/core": ">=5",
+    "@capacitor/device": ">=5",
+    "@capacitor/preferences": ">=5"
+  },
+  "keywords": [
+    "analytics",
+    "capacitor",
+    "ionic",
+    "events",
+    "mobile"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

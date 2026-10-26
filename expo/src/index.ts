@@ -676,7 +676,15 @@ export class ApparentClient {
       const err = error instanceof Error ? error : new Error(typeof error === "string" ? error : String(cleanValue(error) ?? "Unknown error"));
       const stack = String(err.stack ?? "").split("\n").slice(0, 8).map((l) => l.trim()).join("\n").slice(0, 1500);
       const { fatal, how, ...rest } = readProps(extra) as typeof extra;
-      this.enqueue("error", { ...rest, message: String(err.message || "Error").slice(0, 300), type: String(err.name || "Error"), fatal: Boolean(fatal), how: typeof how === "string" ? how : "reported", stack: stack || undefined, screen: this.screenName ?? undefined });
+      // The OS's message is in the phone's language; its code ("-1009", "ENOTFOUND") is the same everywhere.
+      const raw = err as { code?: unknown; cause?: { code?: unknown } };
+      const code = [raw.code, raw.cause?.code].find((c) => typeof c === "string" || typeof c === "number");
+      this.enqueue("error", {
+        ...rest, message: String(err.message || "Error").slice(0, 300), type: String(err.name || "Error"), fatal: Boolean(fatal), how: typeof how === "string" ? how : "reported", stack: stack || undefined, screen: this.screenName ?? undefined,
+        code: code === undefined ? undefined : String(code).slice(0, 64),
+        // Our own last send couldn't reach the internet either: the phone is offline, not the app broken.
+        offline: this.retryReason === "network" ? true : undefined,
+      });
     });
   }
 

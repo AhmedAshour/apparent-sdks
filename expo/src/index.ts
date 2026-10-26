@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AppState, I18nManager, Platform, Settings, type AppStateStatus } from "react-native";
 import * as ReactNative from "react-native";
 
-export const SDK_VERSION = "0.2.1";
+export const SDK_VERSION = "0.2.2";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;

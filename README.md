@@ -7,7 +7,7 @@ Docs: https://apparent.fyi/docs
 |---|---|---|
 | [`expo/`](expo) | Expo and React Native | `npx expo install apparent-expo` ([npm](https://www.npmjs.com/package/apparent-expo)) |
 | [`capacitor/`](capacitor) | Capacitor and Ionic | `npm install apparent-capacitor` ([npm](https://www.npmjs.com/package/apparent-capacitor)) |
-| [`kotlin/`](kotlin) | Android (Kotlin, Compose) | `implementation("fyi.apparent:apparent-android:0.2.1")` (Maven Central) |
+| [`kotlin/`](kotlin) | Android (Kotlin, Compose) | `implementation("fyi.apparent:apparent-android:0.2.2")` (Maven Central) |
 | [`flutter/`](flutter) | Flutter | `flutter pub add apparent` ([pub.dev](https://pub.dev/packages/apparent)) |
 | [apparent-swift](https://github.com/AhmedAshour/apparent-swift) | iOS and macOS (Swift Package) | `https://github.com/AhmedAshour/apparent-swift` |
 

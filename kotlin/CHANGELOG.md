@@ -3,7 +3,10 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
-## Unreleased
+## 0.2.2
+
+- No code changes. README and `trackPurchase`'s doc: send purchases with RevenueCat too (they are the "Bought" step);
+  the README no longer turns the SDK off in debug builds (that hid the wrong-key warning).
 
 ## 0.2.1
 

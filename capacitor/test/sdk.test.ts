@@ -199,7 +199,8 @@ test("linkRevenueCat takes a setAttributes function or the Capacitor Purchases p
   const got: unknown[] = [];
   await c.linkRevenueCat((attributes) => { got.push(attributes); });
   await c.linkRevenueCat({ setAttributes: async (o) => { got.push(o); } });
-  assert.deepEqual(got, [{ apparent_id: c.anonymousId }, { attributes: { apparent_id: c.anonymousId } }]);
+  // @revenuecat/purchases-capacitor takes the attributes themselves (13.x: setAttributes(attributes)).
+  assert.deepEqual(got, [{ apparent_id: c.anonymousId }, { apparent_id: c.anonymousId }]);
   await c.linkRevenueCat(() => { throw new Error("not configured"); }); // never throws into the app
 });
 

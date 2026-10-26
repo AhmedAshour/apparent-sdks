@@ -3,6 +3,13 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Capacitor, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
+## 0.2.2
+
+- `linkRevenueCat(Purchases)` passes the attributes as `@revenuecat/purchases-capacitor` takes them
+  (`setAttributes(attributes)`); 0.2.1 wrapped them in `{ attributes }`. The documented
+  `linkRevenueCat((attributes) => Purchases.setAttributes(attributes))` works on 0.2.1 already.
+- README: the RevenueCat line is `Purchases.setAttributes(attributes)`.
+
 ## 0.2.1
 
 First release on npm as `apparent-capacitor`, for Capacitor 5 and later (Ionic, Vue, React, Angular, Svelte or plain).

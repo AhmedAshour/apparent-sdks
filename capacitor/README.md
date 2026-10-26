@@ -36,7 +36,7 @@ Apparent.reset();           // on sign-out
 RevenueCat (`@revenuecat/purchases-capacitor`), right after `Purchases.configure`:
 
 ```ts
-await Apparent.linkRevenueCat((attributes) => Purchases.setAttributes({ attributes }));
+await Apparent.linkRevenueCat((attributes) => Purchases.setAttributes(attributes));
 ```
 
 ## Links and notification taps

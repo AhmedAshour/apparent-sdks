@@ -2,7 +2,7 @@
 
 Product events for your Apparent dashboard from a native Android app. Same behaviour and wire format as the Expo SDK
 (`sdk/expo`): one random install id, the signed-in user when you set one, screens, properties, crashes, an offline
-queue, opt-out. No advertising id, no Google Play services, no dependencies. minSdk 24, about 65 KB.
+queue, opt-out. No advertising id, no Google Play services, nothing but the Kotlin standard library. minSdk 24, under 100 KB.
 
 ## Install
 
@@ -10,8 +10,8 @@ On Maven Central (`mavenCentral()` is in every new Android project's repositorie
 
 ```kotlin
 // app/build.gradle.kts
-implementation("fyi.apparent:apparent-android:0.2.1")
-implementation("fyi.apparent:apparent-compose:0.2.1")   // only with Compose: TrackScreen("home")
+implementation("fyi.apparent:apparent-android:0.2.2")
+implementation("fyi.apparent:apparent-compose:0.2.2")   // only with Compose: TrackScreen("home")
 implementation("com.android.installreferrer:installreferrer:2.2")   // optional: which link brought each install
 ```
 
@@ -21,7 +21,7 @@ implementation("com.android.installreferrer:installreferrer:2.2")   // optional:
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        Apparent.start(this, app = "einb", key = "<write key>", disabled = BuildConfig.DEBUG)
+        Apparent.start(this, app = "einb", key = "<write key>")
     }
 }
 

@@ -124,8 +124,9 @@ object Apparent {
     }
 
     /**
-     * A purchase you saw yourself (e.g. Play Billing's `onPurchasesUpdated`), as `purchase_success`. Not needed with
-     * RevenueCat connected: its sales come in on their own; use [linkRevenueCat] so they join to what people did.
+     * A purchase you saw yourself (e.g. Play Billing's `onPurchasesUpdated`), as `purchase_success`. Send it with
+     * RevenueCat too: RevenueCat's sales come in on their own, but this event is the "Bought" step of a visit and of
+     * "Where new people stop"; use [linkRevenueCat] so RevenueCat's sales join to the person.
      */
     @JvmStatic
     @JvmOverloads

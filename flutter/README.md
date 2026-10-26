@@ -32,7 +32,7 @@ await Apparent.linkRevenueCat((attrs) => Purchases.setAttributes(attrs)); // pur
 
 - **Screens**: `ApparentNavigatorObserver` sends `screen_view` for each page route by its name (`/settings/account` →
   `settings/account`, `/` → `home`). Dialogs, sheets and unnamed routes are skipped; pass `screenName: (route) => …`
-  for your own names (go_router: pass it in `GoRouter(observers: [...])`).
+  for your own names (go_router: pass it in `GoRouter(observers: [...])`, and a new one in each `ShellRoute` / `StatefulShellBranch`).
   Or call `Apparent.screen('checkout')` yourself.
 - **Errors**: Flutter errors (`FlutterError.onError`) and uncaught Dart errors (`PlatformDispatcher.onError`) are sent as
   `error` events (`message`, `type`, `stack`, `how: "uncaught"`, the screen). They're saved at once, so they arrive even
@@ -42,7 +42,7 @@ await Apparent.linkRevenueCat((attrs) => Purchases.setAttributes(attrs)); // pur
   `app_background` (seconds in the app), `screen_view`, `error`. A visit ends after 30 minutes in the background.
 - **Links**: Flutter can't see the links that open your app by itself, so pass them from your link package:
   `AppLinks().uriLinkStream.listen(Apparent.trackDeepLink)` (app_links; it also gives the launch link). Each one is
-  sent as `deep_link_opened` with the link (any query or fragment value whose name has `token`, `code`, `password`,
+  sent as `deep_link_opened` with the link (any query or fragment value whose name has `token`, `code`, `password`, `passwd`,
   `secret`, `key`, `auth`, `session` or `sig` in it becomes `[redacted]`, a `user:password@` is dropped) and its
   `utm_source` / `utm_medium` / `utm_campaign`. A campaign link that opens the app on its first day counts as where
   that person came from. Off with `trackDeepLinks: false`.
@@ -77,24 +77,12 @@ macOS the platform is `macos`.
 
 What the SDK sends: a random install id it makes itself, the user id you pass to `identify`, event names and the
 properties you add, screens, errors, the app version, iOS/Android version, phone model, language and region setting.
-No advertising id (IDFA/GAID), no contacts, no location. Apparent works out the country from the IP address and doesn't
-keep the address. Nothing needs Apple's tracking prompt.
+No advertising id (IDFA/GAID), no contacts, no precise location. Apparent works out the country from the IP address
+and doesn't keep the address. Nothing needs Apple's tracking prompt.
 
-**Apple (App Privacy)**, data used for Analytics (and App Functionality if you use it to fix problems), not for tracking:
-
-| Type | Collected | Linked to the user |
-|---|---|---|
-| Identifiers › Device ID (the install id) | Yes | Yes |
-| Identifiers › User ID | Only if you call `identify` | Yes |
-| Usage Data › Product Interaction | Yes | Yes |
-| Diagnostics › Crash Data, Other Diagnostic Data | Yes (unless `captureErrors: false`) | Yes |
-
-"Used to track you": **No**. The package has no `PrivacyInfo.xcprivacy` of its own (it's Dart; the plugins it uses,
-`path_provider`, `package_info_plus` and `device_info_plus`, ship theirs), so add the rows above to your app's.
-
-**Google Play (Data safety)**: collected, not shared (Apparent processes it for you), encrypted in transit (HTTPS):
-Device or other IDs; App activity › App interactions; App info and performance › Crash logs and Diagnostics; Personal
-info › User IDs only if you call `identify`. Purpose: Analytics. Collection is required unless you offer `optOut`.
+The answers for Apple's App Privacy and Google Play's Data safety forms: https://apparent.fyi/docs/privacy. The package
+has no `PrivacyInfo.xcprivacy` of its own (it's Dart; the plugins it uses, `path_provider`, `package_info_plus` and
+`device_info_plus`, ship theirs), so add those rows to your app's.
 
 ## Develop
 

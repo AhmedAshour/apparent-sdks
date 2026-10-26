@@ -3,7 +3,10 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
-## Unreleased
+## 0.2.2
+
+- No code changes. README: go_router shell and tab routes need their own observer, the store privacy answers link to
+  apparent.fyi/docs/privacy, `passwd` added to the list of hidden link values.
 
 ## 0.2.1
 

@@ -26,7 +26,7 @@ import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { Preferences } from "@capacitor/preferences";
 
-export const SDK_VERSION = "0.2.1";
+export const SDK_VERSION = "0.2.2";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;
@@ -684,17 +684,17 @@ export class ApparentClient {
   /**
    * Store this person's Apparent id on their RevenueCat customer, so purchases join to what they did. Right after
    * Purchases.configure (and again after reset()):
-   *   await Apparent.linkRevenueCat((attributes) => Purchases.setAttributes({ attributes }));
+   *   await Apparent.linkRevenueCat((attributes) => Purchases.setAttributes(attributes));
    * Passing @revenuecat/purchases-capacitor's Purchases itself works too.
    */
   async linkRevenueCat(
-    setAttributes: ((attributes: Record<string, string>) => unknown) | { setAttributes(options: { attributes: Record<string, string> }): unknown },
+    setAttributes: ((attributes: Record<string, string>) => unknown) | { setAttributes(attributes: Record<string, string>): unknown },
   ): Promise<void> {
     await this.loading;
     try {
       const attributes = { apparent_id: this.anon };
       if (typeof setAttributes === "function") await setAttributes(attributes);
-      else await setAttributes.setAttributes({ attributes });
+      else await setAttributes.setAttributes(attributes);
     } catch (e) {
       this.log("could not link RevenueCat", e);
     }

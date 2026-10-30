@@ -4,7 +4,7 @@
  * @capacitor/preferences, and sends with Capacitor's native HTTP (fetch in a plain browser).
  *
  *   import { Apparent } from "apparent-capacitor";
- *   Apparent.init({ apiUrl: "https://in.apparent.fyi", app: "einb", key: "…" });
+ *   Apparent.init({ apiUrl: "https://in.apparent.fyi", app: "my-app", key: "…" });
  *   Apparent.track("paywall_view", { source: "onboarding" });
  *
  * Built not to lose data:
@@ -26,7 +26,7 @@ import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { Preferences } from "@capacitor/preferences";
 
-export const SDK_VERSION = "0.2.2";
+export const SDK_VERSION = "0.3.0";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;

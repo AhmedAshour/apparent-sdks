@@ -14,10 +14,12 @@
     "skipLibCheck": true,
     "types": [],
     "sourceMap": true,
-    "declarationMap": true
+    "declarationMap": true,
+    "jsx": "react-jsx"
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*.tsx",
     "types/**/*.d.ts"
   ]
 }

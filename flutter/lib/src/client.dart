@@ -14,7 +14,7 @@ import 'package:http_parser/http_parser.dart' show parseHttpDate;
 import 'storage.dart';
 
 /// Sent as `v` in every batch, so the server can tell the SDKs apart.
-const sdkVersion = 'flutter-0.2.2';
+const sdkVersion = 'flutter-0.3.0';
 
 const _storageKey = 'apparent:v2';
 const _maxEventAgeMs = 7 * 24 * 3600 * 1000;

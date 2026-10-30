@@ -4,7 +4,7 @@
  * APIs (Settings / I18nManager, Intl) and react-native-device-info if present, or the app version passed to init().
  *
  *   import { Apparent } from "apparent-expo";
- *   Apparent.init({ apiUrl: "https://…", app: "einb", key: "…" });
+ *   Apparent.init({ apiUrl: "https://…", app: "my-app", key: "…" });
  *   Apparent.track("paywall_view", { source: "onboarding" });
  *
  * Built not to lose data:
@@ -17,10 +17,12 @@
  * deep_link_opened (the app opened by a link) and push_opened (a notification tapped, when the app has expo-notifications).
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ApparentChat } from "./chat";
 import { AppState, I18nManager, Platform, Settings, type AppStateStatus } from "react-native";
 import * as ReactNative from "react-native";
 
-export const SDK_VERSION = "0.2.2";
+export { ApparentChat, type ChatMessage, type ChatImage } from "./chat";
+export const SDK_VERSION = "0.3.0";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;
@@ -431,6 +433,14 @@ export class ApparentClient {
   private linkSub: { remove(): void } | null = null;
   private pushSub: { remove(): void } | null = null;
   private lastPush: string | null = null;
+  /** In-app chat with the app's team (./chat.ts). Works with `disabled` and after optOut: people write on purpose. */
+  readonly chat: ApparentChat = new ApparentChat({
+    config: () => (this.cfg ? { apiUrl: this.cfg.apiUrl, app: this.cfg.app, key: this.cfg.key } : null),
+    who: () => ({ anon: this.anon, user: this.userId, device: this.device }),
+    storage: () => this.storage,
+    ready: () => this.ready(),
+    log: (m, d) => this.log(m, d),
+  });
 
   init(cfg: ApparentConfig): void {
     if (this.cfg) return;

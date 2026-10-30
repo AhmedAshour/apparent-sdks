@@ -1,6 +1,6 @@
 {
   "name": "apparent-expo",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "Event SDK for Expo and bare React Native apps that report to an Apparent dashboard. No native code. Saves every event before sending, never sends twice at once, backs off politely.",
   "homepage": "https://apparent.fyi/docs/sdk/expo",
   "repository": {
@@ -28,6 +28,10 @@
     "./navigation": {
       "types": "./dist/navigation.d.ts",
       "default": "./dist/navigation.js"
+    },
+    "./chat-screen": {
+      "types": "./dist/chat-screen.d.ts",
+      "default": "./dist/chat-screen.js"
     }
   },
   "files": [

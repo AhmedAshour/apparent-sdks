@@ -1,6 +1,6 @@
 name: apparent
 description: Product analytics for Flutter apps that report to Apparent (apparent.fyi). Same wire format and behaviour as the Expo SDK.
-version: 0.2.2
+version: 0.3.0
 homepage: https://apparent.fyi/docs/sdk/flutter
 repository: https://github.com/AhmedAshour/apparent-sdks/tree/main/flutter
 issue_tracker: https://apparent.fyi/docs

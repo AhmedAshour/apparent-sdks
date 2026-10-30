@@ -3,6 +3,13 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
+## 0.3.0
+
+- `Apparent.chat`: in-app chat with the app's team (send, subscribe, unread, markRead, setPushToken, forget). Each
+  account has its own chat, read only with a random chat key kept on the phone. In this SDK only for now.
+- `apparent-expo/chat-screen`: `ApparentChatScreen`, the ready-made chat screen (one look in every app; the app picks
+  its colour, font, roundness, dark or light and every word), and `useChatUnread()` for a badge. No extra packages.
+
 ## 0.2.2
 
 - Errors carry their `code` when they have one, and `offline: true` when the SDK's own last send found no network,

@@ -60,6 +60,8 @@ export function ApparentChatScreen(props: ApparentChatScreenProps) {
   const [server, setServer] = useState<ChatMessage[] | null>(null);
   const [local, setLocal] = useState<ShownMessage[]>([]);
   const [text, setText] = useState("");
+  // A multiline box doesn't always resize by itself on iOS (the second line was cut off): sized from its content.
+  const [boxH, setBoxH] = useState(40);
   const [photo, setPhoto] = useState<PickedImage | null>(null);
   const list = useRef<FlatList<ChatRow>>(null);
 
@@ -98,6 +100,7 @@ export function ApparentChatScreen(props: ApparentChatScreenProps) {
     const m: ShownMessage = { id: `local-${++localId}`, ts: Date.now(), from: "user", text: body, image: null, localImage: photo?.uri ?? null };
     if (photo) images.current.set(m.id, photo);
     setText("");
+    setBoxH(40);
     setPhoto(null);
     void deliver(m, photo);
     list.current?.scrollToOffset({ offset: 0, animated: true });
@@ -205,7 +208,8 @@ export function ApparentChatScreen(props: ApparentChatScreenProps) {
           placeholder={words.placeholder}
           placeholderTextColor={c.muted}
           multiline
-          style={[s.input, font, { backgroundColor: c.input, color: c.onTeam, borderRadius: Math.min(r, 20), textAlign: align }]}
+          onContentSizeChange={(e: { nativeEvent: { contentSize: { height: number } } }) => setBoxH(Math.max(40, Math.min(140, Math.ceil(e.nativeEvent.contentSize.height) + 20)))}
+          style={[s.input, font, { height: text ? boxH : 40, backgroundColor: c.input, color: c.onTeam, borderRadius: Math.min(r, 20), textAlign: align }]}
           accessibilityLabel={words.placeholder}
         />
         <Pressable
@@ -259,7 +263,7 @@ const s = StyleSheet.create({
   previewImage: { width: 64, height: 64 },
   previewX: { width: 24, height: 24, borderRadius: 12, alignItems: "center", justifyContent: "center", marginStart: -12, marginTop: -8 },
   bar: { flexDirection: "row", alignItems: "flex-end", gap: 8, paddingHorizontal: 10, paddingTop: 8, borderTopWidth: StyleSheet.hairlineWidth },
-  input: { flex: 1, minHeight: 40, maxHeight: 140, paddingHorizontal: 14, paddingTop: 10, paddingBottom: 10, fontSize: 16 },
+  input: { flex: 1, paddingHorizontal: 14, paddingTop: 10, paddingBottom: 10, fontSize: 16, textAlignVertical: "top" },
   round: { width: 40, height: 40, borderRadius: 20, alignItems: "center", justifyContent: "center" },
   plus: { fontSize: 22 },
   arrow: { fontSize: 20, fontWeight: "700" },

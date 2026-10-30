@@ -26,7 +26,7 @@ import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { Preferences } from "@capacitor/preferences";
 
-export const SDK_VERSION = "0.3.0";
+export const SDK_VERSION = "0.3.1";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;

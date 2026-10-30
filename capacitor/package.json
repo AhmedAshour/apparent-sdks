@@ -1,6 +1,6 @@
 {
   "name": "apparent-capacitor",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Event SDK for Capacitor and Ionic apps that report to an Apparent dashboard. No native code of its own. Saves every event before sending, never sends twice at once, backs off politely.",
   "homepage": "https://apparent.fyi/docs/sdk/capacitor",
   "repository": {

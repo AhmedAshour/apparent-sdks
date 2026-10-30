@@ -3,6 +3,10 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
+## 0.3.1
+
+- No code changes. Same version as `apparent-expo` 0.3.1 (a fix in its chat screen).
+
 ## 0.3.0
 
 - No code changes. Same version as `apparent-expo` 0.3.0, which adds the in-app chat (this SDK gets it later).

@@ -22,7 +22,7 @@ import { AppState, I18nManager, Platform, Settings, type AppStateStatus } from "
 import * as ReactNative from "react-native";
 
 export { ApparentChat, type ChatMessage, type ChatImage } from "./chat";
-export const SDK_VERSION = "0.3.0";
+export const SDK_VERSION = "0.3.1";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;

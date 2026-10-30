@@ -55,7 +55,7 @@ internal sealed class SendResult {
     data class Server(val status: Int, val retryAfterMs: Long?) : SendResult()
 }
 
-internal const val SDK_VERSION = "kotlin-0.3.0"
+internal const val SDK_VERSION = "kotlin-0.3.1"
 internal const val MAX_EVENT_AGE_MS = 7L * 24 * 3600_000
 internal const val MAX_ERRORS_PER_VISIT = 20
 internal const val MAX_BATCH = 100

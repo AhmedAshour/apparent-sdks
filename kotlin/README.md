@@ -10,8 +10,8 @@ On Maven Central (`mavenCentral()` is in every new Android project's repositorie
 
 ```kotlin
 // app/build.gradle.kts
-implementation("fyi.apparent:apparent-android:0.3.0")
-implementation("fyi.apparent:apparent-compose:0.3.0")   // only with Compose: TrackScreen("home")
+implementation("fyi.apparent:apparent-android:0.3.1")
+implementation("fyi.apparent:apparent-compose:0.3.1")   // only with Compose: TrackScreen("home")
 implementation("com.android.installreferrer:installreferrer:2.2")   // optional: which link brought each install
 ```
 
@@ -110,10 +110,10 @@ goes on. A disk write that takes more than a second no longer holds sending or t
 Tests: `./gradlew :apparent:testDebugUnitTest` (JDK 17, `ANDROID_HOME` set). `HardeningTest` and `FeaturesTest`
 mirror the Expo SDK's `hardening.test.ts` and `features.test.ts`. `fixtures/expo-batch.json` is what the Expo SDK sends for a
 scripted session (`fixtures/make-expo-fixture.ts`); the test checks the Kotlin SDK sends the same bytes.
-Example app: `./gradlew :example:assembleDebug` (sends to a local Apparent at `http://10.0.3.0:4216`).
+Example app: `./gradlew :example:assembleDebug` (sends to a local Apparent at `http://10.0.3.1:4216`).
 Conformance (`sdk/SPEC.md`, `sdk/conformance`): `./conformance.sh` runs the scenario on the JVM against the local
 intake (`PORT=4302 ./conformance.sh` for another port), `./conformance.sh --device` runs the example app on an emulator (`am start … --es apparentConformance
-http://10.0.3.0:4299 --ei step 1`, then `step 2`). Both pass all the rules (27 on the JVM, 2026-10-24); launch 2 tracks and logs out without waiting for the saved state.
+http://10.0.3.1:4299 --ei step 1`, then `step 2`). Both pass all the rules (27 on the JVM, 2026-10-24); launch 2 tracks and logs out without waiting for the saved state.
 
 Differences from the spec's suggestions, on purpose: the state is one file in `noBackupFilesDir` (not
 SharedPreferences, which Auto Backup would copy to a new phone); no WorkManager for the last send on background (the

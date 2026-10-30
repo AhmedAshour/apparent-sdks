@@ -1,6 +1,6 @@
 {
   "name": "apparent-expo",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Event SDK for Expo and bare React Native apps that report to an Apparent dashboard. No native code. Saves every event before sending, never sends twice at once, backs off politely.",
   "homepage": "https://apparent.fyi/docs/sdk/expo",
   "repository": {

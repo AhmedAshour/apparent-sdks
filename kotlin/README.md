@@ -10,8 +10,8 @@ On Maven Central (`mavenCentral()` is in every new Android project's repositorie
 
 ```kotlin
 // app/build.gradle.kts
-implementation("fyi.apparent:apparent-android:0.3.1")
-implementation("fyi.apparent:apparent-compose:0.3.1")   // only with Compose: TrackScreen("home")
+implementation("fyi.apparent:apparent-android:0.3.2")
+implementation("fyi.apparent:apparent-compose:0.3.2")   // only with Compose: TrackScreen("home")
 implementation("com.android.installreferrer:installreferrer:2.2")   // optional: which link brought each install
 ```
 

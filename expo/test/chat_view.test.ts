@@ -2,6 +2,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CHAT_WORDS, chatColors, chatRadius, chatRows, contrast, splitLinks, textOn } from "../src/chat-view.ts";
+import { chatLines } from "../src/chat-text.ts";
 
 test("text on the accent always reads (4.5:1 or the better of dark and white)", () => {
   assert.equal(textOn("#FFD54F"), "#111111");
@@ -28,6 +29,14 @@ test("links are split out, without the sentence's full stop", () => {
   assert.deepEqual(splitLinks("no links"), [{ text: "no links" }]);
 });
 
+test("**bold** loses its marks, links inside it still tap, a lone ** stays", () => {
+  assert.deepEqual(splitLinks("اختر **الصلوات** ثم"), [{ text: "اختر " }, { text: "الصلوات", bold: true }, { text: " ثم" }]);
+  assert.deepEqual(splitLinks("**see https://a.io**"), [
+    { text: "see ", bold: true }, { text: "https://a.io", url: "https://a.io", bold: true },
+  ]);
+  assert.deepEqual(splitLinks("2 ** 3"), [{ text: "2 ** 3" }]);
+});
+
 test("rows: a day label, groups within 5 minutes, the time under the last of a group", () => {
   const now = new Date(2026, 9, 30, 12, 0).getTime();
   const m = (id: string, from: "user" | "team", ts: number) => ({ id, from, ts, text: id, image: null });
@@ -48,4 +57,15 @@ test("an app's own background: surfaces follow it and the muted text still reads
   assert.ok(contrast(c.muted, c.background) >= 4.5, `muted ${c.muted}`);
   assert.ok(contrast(c.onTeam, c.team) >= 7);
   assert.equal(c.onAccent, "#111111");
+});
+
+test("headings, bullets and [words](link) lines; anything else as written", () => {
+  assert.deepEqual(chatLines("## خطوات\n- افتح **الصلوات**\n\nSee [the guide](https://a.io/x)."), [
+    { kind: "h", parts: [{ text: "خطوات" }] },
+    { kind: "li", parts: [{ text: "افتح " }, { text: "الصلوات", bold: true }] },
+    { kind: "p", parts: [] },
+    { kind: "p", parts: [{ text: "See " }, { text: "the guide", url: "https://a.io/x" }, { text: "." }] },
+  ]);
+  assert.deepEqual(chatLines("#hashtag and 5 * 3"), [{ kind: "p", parts: [{ text: "#hashtag and 5 * 3" }] }]);
+  assert.deepEqual(chatLines("[x](javascript:alert(1))")[0].parts, [{ text: "[x](javascript:alert(1))" }]);
 });

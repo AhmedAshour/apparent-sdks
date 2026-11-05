@@ -277,3 +277,28 @@ test("trackScreens follows pushState, back/forward and #/ routes", () => {
     for (const k of ["location", "history", "addEventListener", "removeEventListener"]) delete g[k];
   }
 });
+
+test("a page the browser only preloads sends nothing until it's shown, then the held calls run", async () => {
+  const g = globalThis as unknown as { document?: unknown };
+  const before = g.document;
+  const handlers: (() => void)[] = [];
+  g.document = { prerendering: true, addEventListener: (_t: string, f: () => void) => handlers.push(f) };
+  try {
+    const c = new ApparentClient();
+    clients.push(c);
+    c.init({ apiUrl: "https://in.example/", app: "demo", key: "k", flushIntervalMs: 60_000, captureErrors: false });
+    c.screen("home");
+    c.track("tapped_start");
+    await c.flush();
+    assert.equal(events().length, 0, "nothing sent while preloaded");
+    (g.document as { prerendering: boolean }).prerendering = false;
+    for (const h of handlers) h();
+    await c.ready();
+    await sent(c);
+    assert.ok(named("app_open").length >= 1);
+    assert.equal(named("screen_view").length, 1);
+    assert.equal(named("tapped_start").length, 1);
+  } finally {
+    g.document = before;
+  }
+});

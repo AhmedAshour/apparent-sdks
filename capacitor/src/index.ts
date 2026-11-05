@@ -26,7 +26,7 @@ import { App } from "@capacitor/app";
 import { Device } from "@capacitor/device";
 import { Preferences } from "@capacitor/preferences";
 
-export const SDK_VERSION = "0.3.1";
+export const SDK_VERSION = "0.3.2";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;
@@ -349,6 +349,8 @@ export class ApparentClient {
   /** optIn() or optOut() before the saved state was read: that choice wins over the saved one. */
   private consentBeforeLoad: "in" | "out" | null = null;
   private consented = false;
+  /** While a browser only preloads the page (Chrome guessing from the address bar), calls wait here until it's shown. */
+  private held: (() => void)[] | null = null;
   private warnedHook = false;
   private lastPush: string | null = null;
   private lastLink: { url: string; at: number } | null = null;
@@ -358,6 +360,19 @@ export class ApparentClient {
     if (!cfg || typeof cfg !== "object" || !isText(cfg.apiUrl, 2048) || !isText(cfg.app) || !isText(cfg.key, 512)) {
       // Not this one: a later init with apiUrl, app and key still works.
       if (isDev() || cfg?.debug) console.warn("Apparent: init needs apiUrl, app and key");
+      return;
+    }
+    if (this.held) return;
+    // A page the browser only preloads hasn't been seen: start (and count the visit) once it's shown, never if dropped.
+    const doc = (globalThis as unknown as { document?: { prerendering?: boolean; addEventListener?: (t: string, f: () => void, o?: { once: boolean }) => void } }).document;
+    if (doc?.prerendering && typeof doc.addEventListener === "function") {
+      this.held = [];
+      doc.addEventListener("prerenderingchange", () => {
+        const calls = this.held ?? [];
+        this.held = null;
+        this.init(cfg);
+        for (const call of calls) call();
+      }, { once: true });
       return;
     }
     try {
@@ -577,14 +592,22 @@ export class ApparentClient {
     return { n: out.name.slice(0, 80), p: cleanProps(out.props) };
   }
 
+  private hold(call: () => void): boolean {
+    if (!this.held) return false;
+    if (this.held.length < 100) this.held.push(call);
+    return true;
+  }
+
   /** Record something a person did. Names: lowercase_snake. Props: flat values. */
   track(name: string, props?: Props): void {
+    if (this.hold(() => this.track(name, props))) return;
     if (!this.cfg || !isName(name)) return;
     this.guard(() => this.enqueue(name, props));
   }
 
   /** Record that a screen was shown. Repeats of the current screen are ignored. */
   screen(name: string, props?: Props): void {
+    if (this.hold(() => this.screen(name, props))) return;
     if (!this.cfg || !isName(name) || name === this.screenName) return;
     this.guard(() => {
       const from = this.screenName;

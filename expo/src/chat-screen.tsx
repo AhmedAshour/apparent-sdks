@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { Apparent } from "./index";
 import type { ChatMessage } from "./chat";
-import { CHAT_WORDS, chatColors, chatRadius, chatRows, splitLinks, type ChatRow, type ChatTheme, type ChatWords, type ShownMessage } from "./chat-view";
+import { CHAT_WORDS, chatColors, chatRadius, chatRows, chatLines, type ChatRow, type ChatTheme, type ChatWords, type ShownMessage } from "./chat-view";
 
 export { CHAT_WORDS, type ChatTheme, type ChatWords } from "./chat-view";
 
@@ -132,9 +132,14 @@ export function ApparentChatScreen(props: ApparentChatScreenProps) {
           {image ? <Image source={{ uri: image }} style={[s.image, { borderRadius: Math.max(0, r - 6) }]} resizeMode="cover" accessibilityIgnoresInvertColors /> : null}
           {m.text ? (
             <Text selectable style={[s.text, font, { color: mine ? c.onAccent : c.onTeam, textAlign: align }]}>
-              {splitLinks(m.text).map((p, i) => p.url
-                ? <Text key={i} style={{ color: mine ? c.linkOnAccent : c.link, textDecorationLine: "underline" }} onPress={() => void Linking.openURL(p.url!).catch(() => {})} accessibilityRole="link">{p.text}</Text>
-                : <Text key={i}>{p.text}</Text>)}
+              {chatLines(m.text).map((line, n) => (
+                <Text key={n} style={line.kind === "h" ? [bold, s.heading] : undefined}>
+                  {n ? "\n" : ""}{line.kind === "li" ? "•  " : ""}
+                  {line.parts.map((p, i) => p.url
+                    ? <Text key={i} style={[{ color: mine ? c.linkOnAccent : c.link, textDecorationLine: "underline" }, p.bold && bold]} onPress={() => void Linking.openURL(p.url!).catch(() => {})} accessibilityRole="link">{p.text}</Text>
+                    : <Text key={i} style={p.bold ? bold : undefined}>{p.text}</Text>)}
+                </Text>
+              ))}
             </Text>
           ) : null}
         </Pressable>
@@ -257,6 +262,7 @@ const s = StyleSheet.create({
   day: { fontSize: 12, textAlign: "center", marginTop: 18, marginBottom: 4 },
   bubble: { maxWidth: "82%", paddingHorizontal: 14, paddingVertical: 9 },
   text: { fontSize: 16, lineHeight: 22 },
+  heading: { fontSize: 18, lineHeight: 26 },
   image: { width: 220, height: 220, marginVertical: 4 },
   meta: { fontSize: 11, marginTop: 4, marginHorizontal: 6 },
   preview: { flexDirection: "row", alignItems: "flex-start", paddingHorizontal: 14, paddingTop: 10, borderTopWidth: StyleSheet.hairlineWidth },

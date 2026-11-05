@@ -14,7 +14,8 @@
  * - the batch carries the phone's clock, so the server can correct phones set to the wrong time; it ignores duplicates.
  *
  * Automatic events: first_open, app_open (each visit), app_updated, app_background (seconds in the app), error,
- * deep_link_opened (the app opened by a link) and push_opened (a notification tapped, when the app has expo-notifications).
+ * deep_link_opened (the app opened by a link), push_opened (a notification tapped, when the app has expo-notifications)
+ * and ota_updated (the first launch of a new over-the-air update, when the app has expo-updates).
  */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ApparentChat } from "./chat";
@@ -22,7 +23,7 @@ import { AppState, I18nManager, Platform, Settings, type AppStateStatus } from "
 import * as ReactNative from "react-native";
 
 export { ApparentChat, type ChatMessage, type ChatImage } from "./chat";
-export const SDK_VERSION = "0.3.1";
+export const SDK_VERSION = "0.3.2";
 
 type Value = string | number | boolean | null;
 export type Props = Record<string, Value | undefined>;
@@ -93,6 +94,8 @@ type Saved = {
   consent?: true;
   /** "1.0.6 (42)" the last time the app ran, to spot updates. */
   app: string | null;
+  /** The over-the-air update (expo-updates' updateId) the app ran last time, to spot a new one. */
+  upd?: string | null;
   queue: Queued[];
 };
 
@@ -224,6 +227,8 @@ function validSaved(raw: unknown): Partial<Saved> | null {
     // optIn() with optOutByDefault: dropping it here would forget someone's consent on every launch.
     ...(s.consent === true ? { consent: true as const } : {}),
     app: isText(s.app) ? s.app : null,
+    // Dropping it here would send ota_updated again on every launch.
+    ...(isText(s.upd) ? { upd: s.upd } : {}),
     queue,
   };
 }
@@ -257,6 +262,22 @@ type DeviceInfo = {
 
 function expoApplication(): ExpoApplication | null {
   try { return require("expo-application") as ExpoApplication; } catch { return null; }
+}
+
+type ExpoUpdates = { updateId?: string | null; createdAt?: Date | null; isEmbeddedLaunch?: boolean };
+
+function expoUpdates(): ExpoUpdates | null {
+  try { return require("expo-updates") as ExpoUpdates; } catch { return null; }
+}
+
+/** The over-the-air update this launch runs (expo-updates), when it is one: not the bundle built into the store
+ *  version, and not development (no updateId there). `createdAt`: when it was published, in ms. */
+function otaUpdate(): { id: string; createdAt: number | null; embedded: boolean } | null {
+  const u = expoUpdates();
+  const id = text(safe(() => u?.updateId));
+  if (!u || !id) return null;
+  const at = safe(() => u.createdAt);
+  return { id, createdAt: at instanceof Date && Number.isFinite(at.getTime()) ? at.getTime() : null, embedded: safe(() => u.isEmbeddedLaunch) === true };
 }
 
 function expoLocalization(): ExpoLocalization | null {
@@ -397,6 +418,7 @@ export class ApparentClient {
   private props: Record<string, Value> = {};
   private optedOut = false;
   private appVersion: string | null = null;
+  private updateId: string | null = null;
   private queue: Queued[] = [];
   private inflight: Queued[] = [];
   private sessionId = uid();
@@ -566,9 +588,14 @@ export class ApparentClient {
     this.loaded = true;
 
     const current = this.device.app ? `${this.device.app} (${this.device.build ?? "?"})` : null;
+    // An over-the-air update changes what the app does without a new version number: Apparent dates it as a change
+    // you made (server/changes.ts). Not with a store update (app_updated says it), nor the store version's own bundle.
+    const ota = otaUpdate();
     if (fresh) { this.enqueue("first_open"); void this.recordInstallSource(); }
     else if (saved?.app && current && saved.app !== current) this.enqueue("app_updated", { from_version: saved.app, to_version: current });
+    else if (ota && !ota.embedded && ota.id !== (saved?.upd ?? null)) this.enqueue("ota_updated", { update_id: ota.id, ...(ota.createdAt != null ? { created_at: ota.createdAt } : {}) });
     this.appVersion = current;
+    this.updateId = ota?.id ?? null;
     if (this.appState === "active") this.open(true);
     else this.pendingOpen = true;
     if (this.optedOut) this.queue = [];
@@ -909,7 +936,10 @@ export class ApparentClient {
     const state: Saved = {
       v: 2, anon: this.anon, anonSource: this.anonSource, userId: this.userId, props: this.props, optedOut: this.optedOut,
       ...(this.consented ? { consent: true as const } : {}),
-      app: this.appVersion, queue: [...this.inflight, ...this.queue].slice(-(this.cfg.maxQueue ?? 1000)),
+      app: this.appVersion,
+      // Only with an over-the-air update: without one the saved state stays exactly as before (test/compat.test.ts).
+      ...(this.updateId ? { upd: this.updateId } : {}),
+      queue: [...this.inflight, ...this.queue].slice(-(this.cfg.maxQueue ?? 1000)),
     };
     try {
       // A disk that never answers must not hold sending or ready(): stop waiting after a second (the write goes on).

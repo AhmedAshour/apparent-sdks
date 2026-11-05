@@ -76,25 +76,7 @@ export function chatColors(theme: ChatTheme, phoneDark: boolean): ChatColors {
 
 export const chatRadius = (theme: ChatTheme) => Math.max(0, Math.min(24, theme.radius ?? 18));
 
-/** A message's text with its web addresses split out, so they can be tapped. */
-export type TextPart = { text: string; url?: string };
-export function splitLinks(text: string): TextPart[] {
-  const parts: TextPart[] = [];
-  const re = /\b(https?:\/\/[^\s<>"]+|www\.[^\s<>"]+\.[a-z]{2,}[^\s<>"]*)/gi;
-  let at = 0;
-  for (const m of text.matchAll(re)) {
-    let link = m[0];
-    // A full stop or bracket right after an address belongs to the sentence.
-    const tail = /[.,!?;:)\]]+$/.exec(link)?.[0] ?? "";
-    if (tail) link = link.slice(0, -tail.length);
-    const i = m.index ?? 0;
-    if (i > at) parts.push({ text: text.slice(at, i) });
-    parts.push({ text: link, url: link.startsWith("www.") ? `https://${link}` : link });
-    at = i + link.length;
-  }
-  if (at < text.length) parts.push({ text: text.slice(at) });
-  return parts.length ? parts : [{ text }];
-}
+export { chatLines, splitLinks, type TextLine, type TextPart } from "./chat-text";
 
 /** A message on this phone: sent, on its way, or not sent (tap to try again). */
 export type ShownMessage = ChatMessage & { state?: "sending" | "failed"; localImage?: string | null };

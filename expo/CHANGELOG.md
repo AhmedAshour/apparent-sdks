@@ -3,6 +3,10 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
+## 0.3.2
+
+- No code changes. Same version as `apparent-capacitor` 0.3.2 (a page the browser only preloads sends nothing until it is shown).
+
 ## 0.3.1
 
 - `ApparentChatScreen`: the message box grows with what's typed (up to about six lines) and goes back to one line after sending. Before, on iOS a second line could be cut off and the box stayed tall once empty.

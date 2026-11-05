@@ -95,8 +95,9 @@ Logout: `Apparent.reset()`. Consent: `Apparent.optOut()` / `Apparent.optIn()` (r
   them out. Real phones send exactly what they did before. With `expo-device`, its `isDevice` decides, and iOS also
   gets the model (`"iPhone15,2"`).
 
-Automatic events: `first_open`, `app_open` (each visit, not background launches), `app_updated`,
-`app_background` (with seconds in the app), `install_source` (Android, from the Play referrer), `screen_view`, `error`.
+Automatic events: `first_open`, `app_open` (each visit, not background launches), `app_updated`, `ota_updated` (the
+first launch of a new over-the-air update, with `expo-updates`), `app_background` (with seconds in the app),
+`install_source` (Android, from the Play referrer), `screen_view`, `error`.
 
 ## How the optional modules load
 

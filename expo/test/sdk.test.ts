@@ -7,6 +7,8 @@ import { screenName } from "../src/router.ts";
 import { AppState, __setAppState } from "react-native";
 // @ts-expect-error test fakes are plain JS
 import { __setVersion, __setReferrer } from "expo-application";
+// @ts-expect-error: a test mock (test/mocks/expo-updates.mjs), not the real package
+import { __setUpdate } from "expo-updates";
 // @ts-expect-error test fakes are plain JS
 import { Platform } from "react-native";
 
@@ -265,6 +267,30 @@ describe("what it sends", () => {
     const update = [...srv.seen.values()].find((e) => e.n === "app_updated");
     assert.deepEqual(update?.p, { from_version: "1.0.0 (1)", to_version: "1.0.1 (2)" });
     assert.equal(names(srv).filter((n) => n === "first_open").length, 1);
+  });
+
+  test("ota_updated once per new over-the-air update, never for the store version's own bundle", async () => {
+    const srv = fakeServer();
+    const storage = memStorage();
+    try {
+      __setUpdate("embedded-1", null, true);
+      const c = await launch(storage);
+      await settle(c);
+      await c.shutdown();
+      const at = Date.UTC(2026, 9, 19, 9, 0);
+      __setUpdate("u-2", new Date(at), false);
+      const again = await launch(storage);
+      await settle(again);
+      await again.shutdown();
+      // The same update on the next launch: nothing new.
+      const third = await launch(storage);
+      await settle(third);
+      await third.shutdown();
+      const ota = [...srv.seen.values()].filter((e) => e.n === "ota_updated");
+      assert.equal(ota.length, 1);
+      assert.deepEqual(ota[0]?.p, { update_id: "u-2", created_at: at });
+      assert.equal(names(srv).includes("app_updated"), false);
+    } finally { __setUpdate(null, null, true); }
   });
 
   test("a launch in the background is not a visit until the app is opened", async () => {

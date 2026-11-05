@@ -3,6 +3,11 @@
 All notable changes to this SDK. Versions follow [Semantic Versioning](https://semver.org); every Apparent SDK
 (Expo, Capacitor, Swift, Kotlin, Flutter) carries the same version number and sends the same wire format.
 
+## 0.3.2
+
+- A page the browser only preloads (Chrome's guess while someone types in the address bar) starts nothing and sends
+  nothing until it's shown; `track` / `screen` calls made meanwhile run then. Plain-browser builds only.
+
 ## 0.3.1
 
 - No code changes. Same version as `apparent-expo` 0.3.1 (a fix in its chat screen).

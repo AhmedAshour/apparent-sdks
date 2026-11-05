@@ -11,6 +11,7 @@ const map = {
   "expo-router": "expo-router.mjs",
   "react-native-device-info": "react-native-device-info.mjs",
   "expo-notifications": "expo-notifications.mjs",
+  "expo-updates": "expo-updates.mjs",
   react: "react.mjs",
 };
 
@@ -34,6 +35,7 @@ const optional = {
   "expo-localization": await import("expo-localization"),
   "react-native-device-info": await import("react-native-device-info"),
   "expo-notifications": await import("expo-notifications"),
+  "expo-updates": await import("expo-updates"),
 };
 // expo-notifications is missing unless a test adds it (push_opened needs it).
 globalThis.__missingModules = new Set(["react-native-device-info", "expo-notifications"]);
